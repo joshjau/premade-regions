@@ -20,37 +20,26 @@
 
 local PR = select(2, ...)
 
--- Optimization: Use local variables for frequently accessed global functions
-local setmetatable = setmetatable
-local table_concat = table.concat
-
--- Optimization: Optimize table creation for PR.REGION_TEXT
 PR.REGION_TEXT = {
-    oce = "Oceanic",
-    la = "Los Angeles",
-    chi = "Chicago",
-    mex = "Mexican",
-    bzl = "Brazil",
+    ["oce"] = "Oceanic",
+    ["la"] = "Los Angeles",
+    ["chi"] = "Chicago",
+    ["mex"] = "Mexican",
+    ["bzl"] = "Brazil",
 }
-
--- Optimization: Simplify metatable creation
-PR.REGION_TEXT_META = {
-    __index = function() return "Unknown" end
-}
+PR.REGION_TEXT_META = {}
+PR.REGION_TEXT_META.__index = function (table, key) return "Unknown" end
 setmetatable(PR.REGION_TEXT, PR.REGION_TEXT_META)
 
--- Optimization: Optimize table creation for PR.REGION_COLORED and use table.concat for string concatenation
 PR.REGION_COLORED = {
-    oce = "|cFF009900OCE|r",
-    la = "|cFF3399FFLA|r",
-    chi = "|cFFFF0000CHI|r",
-    mex = table_concat({"|cFF006600M", "|cFFFFFFFFE", "|cFFCC3300X"}),
-    bzl = table_concat({"|cFF006600B", "|cFFFFFF00Z", "|cFF3333CCL"}),
+    ["oce"] = "|cFF009900OCE|r",
+    ["la"] = "|cFF3399FFLA|r",
+    ["chi"] = "|cFFFF0000CHI|r",
+    ["mex"] = "|cFF006600M|r|cFFFFFFFFE|r|cFFCC3300X|r",
+    ["bzl"] = "|cFF006600B|r|cFFFFFF00Z|r|cFF3333CCL|r",
 }
-
-PR.REGION_COLORED_META = {
-    __index = function() return "|cFFFFFFFF?|r " end
-}
+PR.REGION_COLORED_META = {}
+PR.REGION_COLORED_META.__index = function (table, key) return "|cFFFFFFFF?|r " end
 setmetatable(PR.REGION_COLORED, PR.REGION_COLORED_META)
 
 PR.REGION_REALMS = {
